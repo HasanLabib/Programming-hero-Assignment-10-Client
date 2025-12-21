@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Link } from "react-router";
 
 const ReviewCard = ({ review, user, toggleFavorite }) => {
   const {
@@ -46,9 +47,18 @@ const ReviewCard = ({ review, user, toggleFavorite }) => {
 
           <p className="text-sm mt-2">{reviewText}</p>
 
-          <div className="card-actions justify-end mt-4">
-            <div className="badge badge-outline">{foodName}</div>
-            <div className="badge badge-outline"><span className="text-gray-500">By:</span> {userName}</div>
+          <div className="flex justify-between items-center">
+            <div className="card-actions justify-start mt-4">
+              <button className="btn btn-sm btn-outline btn-primary">
+                <Link to={`/reviews/${review._id}`}>View Details</Link>
+              </button>
+            </div>
+            <div className="card-actions justify-end mt-4">
+              <div className="badge badge-outline">{foodName}</div>
+              <div className="badge badge-outline">
+                <span className="text-gray-500">By:</span> {userName}
+              </div>
+            </div>
           </div>
         </div>
       </div>

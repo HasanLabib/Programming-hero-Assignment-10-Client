@@ -8,6 +8,9 @@ import ScrollAnimation from "../../Components/Scroll/ScrollAnimation";
 import axios from "axios";
 import { AuthContext } from "../../Provider/AuthContext";
 import toast from "react-hot-toast";
+import { Swiper } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
 
 const Reviews = ({ review }) => {
   const { review: reviewN, loading } = useReviewHook();
@@ -81,6 +84,11 @@ const Reviews = ({ review }) => {
     }
   };
 
+  const chunkedReviews = [];
+  for (let i = 0; i < review.length; i += 3) {
+    chunkedReviews.push(review.slice(i, i + 3));
+  }
+
   return loading || searchLoading ? (
     <div className="h-[97vh] flex items-center justify-center">
       <ClimbingBoxLoader color="#e74c3c" />
@@ -95,7 +103,7 @@ const Reviews = ({ review }) => {
               <h1 className="text-2xl md:text-4xl font-black w-11/12 mx-auto  text-center mb-5 mt-9">
                 All Reviews
               </h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 lg:gap-6 w-11/12 mx-auto items-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-11/12 mx-auto items-center">
                 {review.map((rv, idx) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
@@ -136,7 +144,7 @@ const Reviews = ({ review }) => {
                   className="input input-bordered w-full md:w-1/2 mx-auto block"
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2  gap-2 md:gap-4 lg:gap-6 w-11/12 mx-auto items-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-11/12 mx-auto items-center">
                 {reviews.map((rv, idx) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
