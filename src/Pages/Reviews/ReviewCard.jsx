@@ -48,7 +48,7 @@ const ReviewCard = ({ review, user, toggleFavorite }) => {
 
           <div className="card-actions justify-end mt-4">
             <div className="badge badge-outline">{foodName}</div>
-            <div className="badge badge-outline">{userName}</div>
+            <div className="badge badge-outline"><span className="text-gray-500">By:</span> {userName}</div>
           </div>
         </div>
       </div>

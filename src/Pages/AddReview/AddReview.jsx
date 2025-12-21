@@ -19,7 +19,7 @@ const AddReview = () => {
     const rating = Number(form.rating.value);
     const reviewText = form.review.value;
     const userEmail = user.email;
-    const userName = user.name;
+    const userName = user.displayName;
     const createdAt = new Date();
 
     const res = await axios.post(

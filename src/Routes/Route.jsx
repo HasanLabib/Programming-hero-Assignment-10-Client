@@ -9,6 +9,7 @@ import Reviews from "../Pages/Reviews/Reviews";
 import MyReviews from "../Pages/Reviews/MyReview";
 import EditReview from "../Pages/Reviews/EditReview";
 import MyFavouriteReview from "../Pages/Reviews/MyFavouriteReview";
+import PrivateRouteProvide from "../Provider/PrivateRouteProvider/PrivateRouteProvide";
 
 export const route = () =>
   createBrowserRouter([
@@ -30,7 +31,11 @@ export const route = () =>
         },
         {
           path: "/add-review",
-          element: <AddReview />,
+          element: (
+            <PrivateRouteProvide>
+              <AddReview />
+            </PrivateRouteProvide>
+          ),
         },
         {
           path: "/reviews",
@@ -38,16 +43,28 @@ export const route = () =>
         },
         {
           path: "/my-reviews",
-          Component: MyReviews,
+          element: (
+            <PrivateRouteProvide>
+              <MyReviews />
+            </PrivateRouteProvide>
+          ),
         },
         {
           path: "/edit-review/:id",
-          Component: EditReview,
+          element: (
+            <PrivateRouteProvide>
+              <EditReview />
+            </PrivateRouteProvide>
+          ),
         },
         {
-          path:"/my-favorites",
-          Component: MyFavouriteReview,
-        }
+          path: "/my-favorites",
+          element: (
+            <PrivateRouteProvide>
+              <MyFavouriteReview />
+            </PrivateRouteProvide>
+          ),
+        },
       ],
     },
   ]);
