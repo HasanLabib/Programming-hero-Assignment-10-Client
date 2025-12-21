@@ -8,6 +8,7 @@ import AddReview from "../Pages/AddReview/AddReview";
 import Reviews from "../Pages/Reviews/Reviews";
 import MyReviews from "../Pages/Reviews/MyReview";
 import EditReview from "../Pages/Reviews/EditReview";
+import MyFavouriteReview from "../Pages/Reviews/MyFavouriteReview";
 
 export const route = () =>
   createBrowserRouter([
@@ -43,6 +44,10 @@ export const route = () =>
           path: "/edit-review/:id",
           Component: EditReview,
         },
+        {
+          path:"/my-favorites",
+          Component: MyFavouriteReview,
+        }
       ],
     },
   ]);
