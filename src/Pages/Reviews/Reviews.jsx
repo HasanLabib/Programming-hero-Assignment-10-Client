@@ -1,16 +1,44 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router";
 import { ClimbingBoxLoader } from "react-spinners";
 import useReviewHook from "../../hooks/useReviewHook";
 import ReviewCard from "./ReviewCard";
 import ScrollAnimation from "../../Components/Scroll/ScrollAnimation";
+import axios from "axios";
 
 const Reviews = ({ review }) => {
   const { review: reviewN, loading } = useReviewHook();
+  const [reviews, setReviews] = useState(reviewN);
+  const [search, setSearch] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
 
-  return loading ? (
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const fetchReviews = async () => {
+        try {
+          setSearchLoading(true);
+          const res = await axios.get(
+            `http://localhost:4000/reviews?search=${search}`
+          );
+          setReviews(res.data);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setSearchLoading(false);
+        }
+      };
+
+      if (search.trim() !== "") {
+        fetchReviews();
+      } else {
+        setReviews(reviewN);
+      }
+    }, 1000);
+    return () => clearTimeout(handler);
+  }, [search, reviewN]);
+
+  return loading || searchLoading ? (
     <div className="h-[97vh] flex items-center justify-center">
       <ClimbingBoxLoader color="#e74c3c" />
     </div>
@@ -58,8 +86,17 @@ const Reviews = ({ review }) => {
               <h1 className="text-2xl md:text-4xl font-Bold text-center mb-5">
                 All Reviews
               </h1>
+              <div className="w-11/12 mx-auto mb-5">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search by food name"
+                  className="input input-bordered w-full md:w-1/2 mx-auto block"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2  gap-2 md:gap-4 lg:gap-6 w-11/12 mx-auto items-center">
-                {reviewN.map((rv, idx) => {
+                {reviews.map((rv, idx) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
                     <ScrollAnimation delay={delay}>

@@ -27,7 +27,14 @@ const MyReviews = () => {
     setReviews(reviews.filter((r) => r._id !== deleteId));
     setDeleteId(null);
   };
-
+  if (reviews.length === 0 && !loading) {
+    return (
+      <div className="h-[80vh] flex flex-col items-center justify-center">
+        <h2 className="text-2xl font-semibold mb-5">My Reviews</h2>
+        <p className="text-lg mb-4">You have not added any reviews yet.</p>
+      </div>
+    );
+  }
   if (loading) {
     return (
       <div className="h-[97vh] flex items-center justify-center">
