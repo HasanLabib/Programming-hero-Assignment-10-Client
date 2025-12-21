@@ -5,6 +5,7 @@ import Aos from "aos";
 import { AnimatePresence, motion } from "framer-motion";
 
 import NavBar from "../Components/NavBar/NavBar";
+import Footer from "../Components/Footer/Footer";
 
 const HomeLayout = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const HomeLayout = () => {
         </main>
       </section>
       <section>
-        {/* <Footer /> */}
+        <Footer />
       </section>
     </div>
   );
