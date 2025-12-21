@@ -1,10 +1,12 @@
 import React from 'react';
-import Card from '../Components/Card/Card';
+
+
+import Reviews from './Reviews/Reviews';
 
 const Home = () => {
     return (
         <div>
-            <Card />
+            <Reviews />
         </div>
     );
 };

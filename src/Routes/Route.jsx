@@ -6,6 +6,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Login from "../Pages/Login/Login";
 import AddReview from "../Pages/AddReview/AddReview";
 import Reviews from "../Pages/Reviews/Reviews";
+import MyReviews from "../Pages/Reviews/MyReview";
 
 export const route = () =>
   createBrowserRouter([
@@ -32,6 +33,10 @@ export const route = () =>
         {
           path: "/reviews",
           Component: Reviews
+        },
+        {
+          path: "/my-reviews",
+          Component: MyReviews,
         }
       ],
     },
