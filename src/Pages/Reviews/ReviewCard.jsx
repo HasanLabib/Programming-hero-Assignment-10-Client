@@ -1,7 +1,7 @@
 import React from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const ReviewCard = ({ review }) => {
-  
+const ReviewCard = ({ review, user, toggleFavorite }) => {
   const {
     foodName,
     foodImage,
@@ -15,12 +15,23 @@ const ReviewCard = ({ review }) => {
   return (
     <div>
       <div className="card bg-base-100 w-96 shadow-sm">
-        <figure className="px-6 pt-6">
+        <figure className="px-6 pt-6 relative">
           <img
             src={foodImage}
             alt="Food Item"
             className="rounded-xl h-48 w-full object-cover"
           />
+          {user && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleFavorite();
+              }}
+              className="absolute top-8 right-8 text-red-500 text-2xl"
+            >
+              {review.isFavorited ? <FaHeart /> : <FaRegHeart />}
+            </button>
+          )}
         </figure>
 
         <div className="card-body">
