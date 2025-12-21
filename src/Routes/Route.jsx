@@ -10,12 +10,15 @@ import MyReviews from "../Pages/Reviews/MyReview";
 import EditReview from "../Pages/Reviews/EditReview";
 import MyFavouriteReview from "../Pages/Reviews/MyFavouriteReview";
 import PrivateRouteProvide from "../Provider/PrivateRouteProvider/PrivateRouteProvide";
+import ReviewDetails from "../Pages/Reviews/ReviewDetails";
+import RouteError from "../Error/RouteErrorPage/RouteError";
 
 export const route = () =>
   createBrowserRouter([
     {
       path: "/",
       Component: App,
+      errorElement: <RouteError />,
       children: [
         {
           index: true,
@@ -40,6 +43,14 @@ export const route = () =>
         {
           path: "/reviews",
           Component: Reviews,
+        },
+        {
+          path: "/reviews/:id",
+          element: (
+            <PrivateRouteProvide>
+              <ReviewDetails />
+            </PrivateRouteProvide>
+          ),
         },
         {
           path: "/my-reviews",

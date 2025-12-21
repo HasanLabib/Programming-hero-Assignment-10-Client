@@ -83,7 +83,7 @@ const SignUp = () => {
               console.log(res);
               setUser({ ...user, displayName: name, photoURL: photoUrl });
               axios
-                .post("http://localhost:4000/users", {
+                .post("https://programming-hero-assignment-10-serv.vercel.app/users", {
                   name: name,
                   email: email,
                   password: password,
@@ -151,7 +151,7 @@ const SignUp = () => {
           photoURL: loggedUser.photoURL,
         });
         axios
-          .post("http://localhost:4000/googleUsers", {
+          .post("https://programming-hero-assignment-10-serv.vercel.app/googleUsers", {
             name: loggedUser.displayName,
             email: loggedUser.email,
             photoURL: loggedUser.photoURL,

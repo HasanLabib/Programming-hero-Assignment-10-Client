@@ -12,7 +12,7 @@ const MyFavouriteReview = () => {
 
   useEffect(() => {
     if (user?.email) {
-      axios.get(`http://localhost:4000/favorites/${user.email}`).then((res) => {
+      axios.get(`https://programming-hero-assignment-10-serv.vercel.app/favorites/${user.email}`).then((res) => {
         setReviews(res.data);
         setLoading(false);
       });
@@ -21,7 +21,7 @@ const MyFavouriteReview = () => {
 
   const handleDelete = async () => {
     await axios.delete(
-      `http://localhost:4000/favorites/${deleteId}?userEmail=${user.email}`
+      `https://programming-hero-assignment-10-serv.vercel.app/favorites/${deleteId}?userEmail=${user.email}`
     );
 
     setReviews(reviews.filter((r) => r._id !== deleteId));

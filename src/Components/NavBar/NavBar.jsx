@@ -28,8 +28,6 @@ const NavBar = () => {
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "All Reviews", path: "/reviews" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
   ];
   const link = menuItems.map((item, index) => (
     <li key={index}>

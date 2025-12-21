@@ -14,7 +14,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 
 const Reviews = ({ review }) => {
   const { review: reviewN, loading } = useReviewHook();
-  const [reviews, setReviews] = useState(reviewN);
+  const [allReviews, setReviews] = useState(reviewN || []);
   const [search, setSearch] = useState("");
   const { user } = useContext(AuthContext);
   const [searchLoading, setSearchLoading] = useState(false);
@@ -48,7 +48,7 @@ const Reviews = ({ review }) => {
     const fetchFavorites = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/reviews/favorites/${user.email}`
+          `https://programming-hero-assignment-10-serv.vercel.app/reviews/favorites/${user.email}`
         );
         const favoriteIds = res.data;
         setReviews((prev) =>
@@ -63,12 +63,12 @@ const Reviews = ({ review }) => {
     };
 
     fetchFavorites();
-  }, [user, reviews]);
+  }, [user]);
 
   const toggleFavorite = async (reviewId) => {
     if (!user) return toast("Please login to favorite a review");
     try {
-      await axios.post(`http://localhost:4000/reviews/favorite/${reviewId}`, {
+      await axios.post(`https://programming-hero-assignment-10-serv.vercel.app/reviews/favorite/${reviewId}`, {
         userEmail: user.email,
       });
       setReviews((prevReviews) =>
@@ -83,11 +83,6 @@ const Reviews = ({ review }) => {
       toast.error("Failed to favorite the review. Please try again.");
     }
   };
-
-  const chunkedReviews = [];
-  for (let i = 0; i < review.length; i += 3) {
-    chunkedReviews.push(review.slice(i, i + 3));
-  }
 
   return loading || searchLoading ? (
     <div className="h-[97vh] flex items-center justify-center">
@@ -145,7 +140,7 @@ const Reviews = ({ review }) => {
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-11/12 mx-auto items-center">
-                {reviews.map((rv, idx) => {
+                {allReviews.map((rv, idx) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
                     <ScrollAnimation delay={delay}>

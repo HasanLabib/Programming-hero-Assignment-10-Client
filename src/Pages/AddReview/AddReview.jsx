@@ -50,7 +50,7 @@ const AddReview = () => {
       };
 
       try {
-        await axios.post("http://localhost:4000/add-review", reviewData);
+        await axios.post("https://programming-hero-assignment-10-serv.vercel.app/add-review", reviewData);
         toast.success("Review added successfully");
         form.reset();
       } catch (error) {

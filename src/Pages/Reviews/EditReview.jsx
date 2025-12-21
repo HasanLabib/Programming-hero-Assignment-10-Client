@@ -13,7 +13,7 @@ const EditReview = () => {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/reviews/${id}`)
+      .get(`https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`)
       .then((res) => {
         console.log(res.data);
         setReview(res.data);
@@ -64,7 +64,7 @@ const EditReview = () => {
       };
 
       try {
-        await axios.put(`http://localhost:4000/reviews/${id}`, reviewData);
+        await axios.put(`https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`, reviewData);
         toast.success("Review updated successfully");
         form.reset();
         navigate(-1);

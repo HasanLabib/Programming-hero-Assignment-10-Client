@@ -16,7 +16,7 @@ const Home = () => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:4000/top-reviews`);
+        const res = await axios.get(`https://programming-hero-assignment-10-serv.vercel.app/top-reviews`);
         setTopReviews(res.data);
       } catch (err) {
         console.error(err);

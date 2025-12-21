@@ -9,7 +9,7 @@ const useReviewHook = () => {
     const fetchReview = async () => {
       try {
         setLoading(true);
-        const result = await axios.get("http://localhost:4000/reviews");
+        const result = await axios.get("https://programming-hero-assignment-10-serv.vercel.app/reviews");
 
         setReview(result.data);
       } catch (error) {
