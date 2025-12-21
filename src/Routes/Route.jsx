@@ -7,6 +7,7 @@ import Login from "../Pages/Login/Login";
 import AddReview from "../Pages/AddReview/AddReview";
 import Reviews from "../Pages/Reviews/Reviews";
 import MyReviews from "../Pages/Reviews/MyReview";
+import EditReview from "../Pages/Reviews/EditReview";
 
 export const route = () =>
   createBrowserRouter([
@@ -32,12 +33,16 @@ export const route = () =>
         },
         {
           path: "/reviews",
-          Component: Reviews
+          Component: Reviews,
         },
         {
           path: "/my-reviews",
           Component: MyReviews,
-        }
+        },
+        {
+          path: "/edit-review/:id",
+          Component: EditReview,
+        },
       ],
     },
   ]);

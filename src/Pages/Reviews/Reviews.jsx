@@ -29,8 +29,8 @@ const Reviews = ({ review }) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
                     <ScrollAnimation delay={delay}>
-                      <div key={rv.serviceId}>
-                        <Link to={`/reviews/${rv.serviceId}`}>
+                      <div key={rv._id}>
+                        <Link to={`/reviews/${rv._id}`}>
                           <ReviewCard review={rv} />
                         </Link>
                       </div>
@@ -63,8 +63,8 @@ const Reviews = ({ review }) => {
                   const delay = 0.3 + idx * 0.2;
                   return (
                     <ScrollAnimation delay={delay}>
-                      <div key={rv.serviceId}>
-                        <Link to={`/reviews/${rv.serviceId}`}>
+                      <div key={rv._id}>
+                        <Link to={`/reviews/${rv._id}`}>
                           <ReviewCard review={rv} />
                         </Link>
                       </div>
