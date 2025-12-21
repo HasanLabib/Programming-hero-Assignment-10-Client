@@ -27,7 +27,7 @@ const NavBar = () => {
 
   const menuItems = [
     { name: "Home", path: "/" },
-    { name: "All Reviews", path: "/all-reviews" },
+    { name: "All Reviews", path: "/reviews" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -81,7 +81,7 @@ const NavBar = () => {
               </ul>
             </div>
             <NavLink to={`/`} className="btn btn-ghost text-xl">
-              <img src={logo} className="h-20 w-auto" />
+              <img src={logo} className="h-12 w-auto" />
             </NavLink>
           </div>
           <div className="navbar-center hidden lg:flex">

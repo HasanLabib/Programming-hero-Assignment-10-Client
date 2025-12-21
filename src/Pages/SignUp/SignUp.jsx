@@ -80,6 +80,7 @@ const SignUp = () => {
           const user = result.user;
           updateUser(userData)
             .then((res) => {
+              console.log(res);
               setUser({ ...user, displayName: name, photoURL: photoUrl });
               axios
                 .post("http://localhost:4000/users", {
@@ -95,7 +96,7 @@ const SignUp = () => {
                   console.error("Error saving user data:", error);
                 });
               toast.success("SignUP Successful");
-              console.log(res);
+
               navigate("/");
               setLoading(false);
               form.current.reset();
