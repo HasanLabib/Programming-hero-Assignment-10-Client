@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import logo from "../../assets/logo.png"; // Adjust path based on file location
 import ThemeToggle from "../ThemeToggle";
@@ -7,6 +7,9 @@ import ThemeToggle from "../ThemeToggle";
 const NavBar = () => {
   const { user, signOutUser } = use(AuthContext);
   const [photo, setPhoto] = useState("");
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith("/dashboard");
+
   useEffect(() => {
     const fetchPhoto = () => {
       if (user) {
@@ -31,7 +34,7 @@ const NavBar = () => {
     { name: "All Reviews", path: "/reviews" },
     { name: "Explore", path: "/explore" },
     { name: "About Us", path: "/about" },
-    { name: "Contact Us", path:"/contact"}
+    { name: "Contact Us", path: "/contact" },
   ];
   const link = menuItems.map((item, index) => (
     <li key={index}>
@@ -48,7 +51,13 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className=" bg-base-100 shadow-sm">
+      <div
+        className={`bg-base-100 ${
+          isDashboard
+            ? "fixed top-0 left-0 w-full z-40"
+            : "fixed top-0 left-0 w-full z-50 shadow-sm"
+        }`}
+      >
         <div className="navbar w-full mx-auto md:w-[96%] lg:w-11/12">
           <div className="navbar-start">
             <div className="dropdown">
@@ -128,21 +137,7 @@ const NavBar = () => {
                         Dashboard
                       </NavLink>
                     </li>
-                    <li>
-                      <NavLink to={`/add-review`} className="btn">
-                        Add Review
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to={`/my-reviews`} className="btn">
-                        My Reviews
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to={`/my-favorites`} className="btn">
-                        My Favorites
-                      </NavLink>
-                    </li>
+
                     <li>
                       <NavLink onClick={handleSignOut} className="btn">
                         Logout

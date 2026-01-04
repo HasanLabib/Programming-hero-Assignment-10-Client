@@ -21,7 +21,7 @@ const HomeLayout = () => {
     <div className="flex flex-col min-h-screen">
       <section className="nav-section">
         <header>
-          <nav>
+          <nav >
             <NavBar />
           </nav>
         </header>
@@ -37,7 +37,7 @@ const HomeLayout = () => {
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               {" "}
-              <div className="min-h-screen bg-base-100 text-base-content">
+              <div className="min-h-screen bg-base-100 text-base-content pt-16">
                 <Outlet />
               </div>
             </motion.main>
