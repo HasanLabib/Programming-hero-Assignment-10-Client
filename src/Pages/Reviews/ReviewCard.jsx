@@ -1,8 +1,11 @@
-import React from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import React, { useContext } from "react";
+import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 import { Link } from "react-router";
+import { AuthContext } from "../../Provider/AuthContext";
 
-const ReviewCard = ({ review, user, toggleFavorite }) => {
+const ReviewCard = ({ review, toggleFavorite }) => {
+  const { user } = useContext(AuthContext);
+
   const {
     foodName,
     foodImage,
@@ -12,57 +15,66 @@ const ReviewCard = ({ review, user, toggleFavorite }) => {
     rating,
     userName,
     reviewText,
+    _id,
+    isFavorited,
   } = review;
+
   return (
-    <div className="mx-auto">
-      <div className="card w-80 bg-base-100 shadow-sm">
-        <figure className="px-6 pt-6 relative">
+    <Link to={`/reviews/${_id}`} className="block h-full">
+      <div className="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden h-full flex flex-col">
+       
+        <figure className="relative">
           <img
             src={foodImage}
-            alt="Food Item"
-            className="rounded-xl h-48 w-full object-cover"
+            alt={foodName}
+            className="h-52 w-full object-cover"
           />
+
           {user && (
             <button
               onClick={(e) => {
-                e.preventDefault();
+                e.preventDefault(); 
                 toggleFavorite();
               }}
-              className="absolute top-8 right-8 text-red-500 text-2xl"
+              className="absolute top-3 right-3 bg-white/90 backdrop-blur p-2 rounded-full text-red-500 text-lg shadow hover:scale-110 transition"
             >
-              {review.isFavorited ? <FaHeart /> : <FaRegHeart />}
+              {isFavorited ? <FaHeart /> : <FaRegHeart />}
             </button>
           )}
+
+          <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-sm flex items-center gap-1">
+            <FaStar className="text-amber-400" />
+            <span className="font-semibold">{rating}</span>
+          </div>
         </figure>
 
-        <div className="card-body">
-          <div className="flex items-center justify-between">
-            <h2 className="card-title text-lg">{foodName}</h2>
-            <div className="badge badge-secondary">⭐ {rating}</div>
+        <div className="card-body p-5 flex flex-col flex-grow">
+          <div>
+            <h2 className="text-lg font-bold line-clamp-1">{foodName}</h2>
+            <p className="text-sm text-gray-500 line-clamp-1">
+              {restaurant} · {location}, {city}
+            </p>
           </div>
 
-          <p className="text-sm text-gray-500">
-            {restaurant} · {location}, {city}
+          <p className="text-sm text-gray-600 line-clamp-3 mt-2 flex-grow">
+            {reviewText}
           </p>
 
-          <p className="text-sm mt-2">{reviewText}</p>
+          <div className="flex items-center justify-between mt-4">
+            <span className="btn btn-xs btn-outline btn-primary rounded-full">
+              View Details
+            </span>
 
-          <div className="flex justify-between gap-4 items-center">
-            <div className="card-actions justify-start mt-4">
-              <button className="btn btn-sm btn-outline w-fit btn-primary">
-                <Link to={`/reviews/${review._id}`}>View Details</Link>
-              </button>
-            </div>
-            <div className="card-actions flex-col justify-end mt-4">
-              <div className="badge badge-outline">{foodName}</div>
-              <div className="badge badge-outline">
-                <span className="text-gray-500">By:</span> {userName.split(" ")[0]}
-              </div>
-            </div>
+            <span className="text-sm text-gray-500">
+              By{" "}
+              <span className="font-medium text-gray-700">
+                {userName?.split(" ")[0]}
+              </span>
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

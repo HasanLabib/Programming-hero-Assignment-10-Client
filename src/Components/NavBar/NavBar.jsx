@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import logo from "../../assets/logo.png"; // Adjust path based on file location
+import ThemeToggle from "../ThemeToggle";
 
 const NavBar = () => {
   const { user, signOutUser } = use(AuthContext);
@@ -28,6 +29,9 @@ const NavBar = () => {
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "All Reviews", path: "/reviews" },
+    { name: "Explore", path: "/explore" },
+    { name: "About Us", path: "/about" },
+    { name: "Contact Us", path:"/contact"}
   ];
   const link = menuItems.map((item, index) => (
     <li key={index}>
@@ -73,8 +77,11 @@ const NavBar = () => {
                 tabIndex="-1"
                 className="menu menu-sm dropdown-content  bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
               >
-                <div className=" menu bg-base-200  rounded-box w-full ">
+                <div className=" menu bg-base-200 rounded-box w-full">
                   {link}
+                </div>
+                <div className="flex justify-end p-4">
+                  <ThemeToggle />
                 </div>
               </ul>
             </div>
@@ -84,7 +91,7 @@ const NavBar = () => {
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
-              <div className="menu menu-horizontal rounded-box">{link}</div>
+              <div className="menu menu-horizontal rounded-box ">{link}</div>
             </ul>
           </div>
           <div className="navbar-end">
@@ -110,6 +117,16 @@ const NavBar = () => {
                   >
                     <li>
                       <button className="btn">{user.displayName}</button>
+                    </li>
+                    <li>
+                      <NavLink to={`/profile`} className="btn">
+                        My Profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to={`/dashboard`} className="btn">
+                        Dashboard
+                      </NavLink>
                     </li>
                     <li>
                       <NavLink to={`/add-review`} className="btn">

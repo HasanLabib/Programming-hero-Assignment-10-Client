@@ -7,129 +7,119 @@ import { ClimbingBoxLoader } from "react-spinners";
 
 const EditReview = () => {
   const { user } = useContext(AuthContext);
-  const [review, setReview] = useState([]);
+  const [review, setReview] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const { id } = useParams();
+
   useEffect(() => {
-    axios
-      .get(`https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        setReview(res.data);
-      })
-      .finally(() => setLoading(false));
+    const fetchReview = () => {
+      axios
+        .get(
+          `https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`
+        )
+        .then((res) => setReview(res.data))
+        .finally(() => setLoading(false));
+    };
+    fetchReview();
   }, [id]);
+
   const handleEditReview = async (e) => {
     e.preventDefault();
-
     const form = e.target;
 
-    const foodName = form.foodName.value;
-    const foodImage = form.foodImage.files[0];
-    const restaurant = form.restaurant.value;
-    const location = form.location.value.toUpperCase();
-    const city = form.city.value;
-    const rating = Number(form.rating.value);
-    const reviewText = form.review.value;
-    const userEmail = user.email;
-    const userName = user.name;
-    const createdAt = new Date();
+    let updatedImage = review.foodImage;
 
-    const res = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-      {
-        image: foodImage,
-      },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    const photoUrl = res.data.data.display_url;
-
-    if (res.data.success) {
-      const reviewData = {
-        foodName,
-        foodImage: photoUrl,
-        restaurant,
-        location,
-        city,
-        rating,
-        reviewText,
-        userEmail,
-        userName,
-        createdAt,
-      };
-
+    if (form.foodImage.files.length > 0) {
       try {
-        await axios.put(`https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`, reviewData);
-        toast.success("Review updated successfully");
-        form.reset();
-        navigate(-1);
-      } catch (error) {
-        toast.error("Failed to update review");
-        console.error(error);
+        const formData = new FormData();
+        formData.append("image", form.foodImage.files[0]);
+
+        const imgRes = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${
+            import.meta.env.VITE_IMGBB_KEY
+          }`,
+          formData
+        );
+
+        updatedImage = imgRes.data.data.display_url;
+      } catch {
+        toast.error("Image upload failed");
+        return;
       }
-    } else {
-      toast.error("Image upload failed");
+    }
+
+    const updatedReview = {
+      foodName: form.foodName.value,
+      foodImage: updatedImage,
+      restaurant: form.restaurant.value,
+      location: form.location.value,
+      city: form.city.value,
+      category: form.category.value,
+      rating: Number(form.rating.value),
+      reviewText: form.reviewText.value,
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+
+    try {
+      await axios.put(
+        `https://programming-hero-assignment-10-serv.vercel.app/reviews/${id}`,
+        updatedReview
+      );
+
+      toast.success("Review updated successfully");
+      navigate(-1);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update review");
     }
   };
 
   if (loading) {
     return (
-      <div className="h-[97vh] flex items-center justify-center">
+      <div className="h-[90vh] flex items-center justify-center">
         <ClimbingBoxLoader color="#e74c3c" />
       </div>
     );
   }
 
   return (
-    <div className="flex justify-center md:justify-around mt-5 px-3 sm:px-6">
+    <div className="flex justify-center mt-6 px-4">
       <form
         onSubmit={handleEditReview}
-        className="fieldset bg-base-200 shadow-2xl flex flex-col border-base-300 rounded-box w-full max-w-md border p-6 sm:p-8 bg-[#fffaf05e]"
+        className="bg-base-200 shadow-xl rounded-lg w-full max-w-md p-6 space-y-3"
       >
-        <legend className="fieldset-legend text-base sm:text-lg font-semibold text-center mb-2">
-          Add Your Favourite Restaurant Review
-        </legend>
+        <h2 className="text-xl font-bold text-center">Edit Your Review ✏️</h2>
 
-        <label className="label">Food Name</label>
         <input
-          type="text"
           name="foodName"
           defaultValue={review.foodName}
           className="input input-bordered w-full"
-          placeholder="Food name"
+          placeholder="Food Name"
           required
         />
 
-        <label className="label">Food Image</label>
         <input
           type="file"
           name="foodImage"
-          className="input input-bordered w-full"
-          required
+          className="file-input file-input-bordered w-full"
         />
 
-        <label className="label">Restaurant Name</label>
         <input
-          type="text"
           name="restaurant"
           defaultValue={review.restaurant}
           className="input input-bordered w-full"
-          placeholder="Restaurant name"
+          placeholder="Restaurant Name"
           required
         />
 
-        <label className="label">Address</label>
         <input
-          type="text"
           name="location"
           defaultValue={review.location}
           className="input input-bordered w-full"
-          placeholder="Full address"
+          placeholder="Address / Area"
           required
         />
 
@@ -208,7 +198,20 @@ const EditReview = () => {
           <option value="Sherpur">Sherpur</option>
         </select>
 
-        <label className="label">Star Rating</label>
+        <select
+          name="category"
+          defaultValue={review.category}
+          className="select select-bordered w-full"
+          required
+        >
+          <option value="" disabled>
+            Select Category
+          </option>
+          <option value="Street Food">Street Food 🍢</option>
+          <option value="Restaurant">Restaurant 🍽️</option>
+          <option value="Home-Cooked">Home-Cooked 🏠</option>
+        </select>
+
         <select
           name="rating"
           defaultValue={review.rating}
@@ -216,7 +219,7 @@ const EditReview = () => {
           required
         >
           <option value="" disabled>
-            Select rating
+            Rating
           </option>
           <option value="5">★★★★★ (5)</option>
           <option value="4">★★★★☆ (4)</option>
@@ -225,16 +228,15 @@ const EditReview = () => {
           <option value="1">★☆☆☆☆ (1)</option>
         </select>
 
-        <label className="label">Review</label>
         <textarea
-          name="review"
+          name="reviewText"
           defaultValue={review.reviewText}
-          className="textarea textarea-bordered w-full resize-none"
-          placeholder="Write your review"
+          className="textarea textarea-bordered w-full"
+          placeholder="Your Review"
           required
-        ></textarea>
+        />
 
-        <button className="btn btn-neutral mt-4 w-full">Edit Review</button>
+        <button className="btn btn-neutral w-full">Update Review</button>
       </form>
     </div>
   );

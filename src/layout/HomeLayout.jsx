@@ -36,7 +36,10 @@ const HomeLayout = () => {
               exit={{ opacity: 0, y: -40 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <Outlet />
+              {" "}
+              <div className="min-h-screen bg-base-100 text-base-content">
+                <Outlet />
+              </div>
             </motion.main>
           </AnimatePresence>
         </main>
